@@ -10,6 +10,7 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/account-ms" />
+            <option value="$PROJECT_DIR$/aggregator-ms" />
           </set>
         </option>
       </GradleProjectSettings>

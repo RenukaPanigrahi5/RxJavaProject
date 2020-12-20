@@ -1,3 +1,4 @@
 rootProject.name = 'rxjava'
 include 'account-ms'
+include 'aggregator-ms'
 
