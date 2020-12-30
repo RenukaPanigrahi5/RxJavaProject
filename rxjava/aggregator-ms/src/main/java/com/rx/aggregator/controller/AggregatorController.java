@@ -5,7 +5,6 @@ import com.rx.aggregator.client.CustomerClient;
 import com.rx.aggregator.model.AccountDto;
 import com.rx.aggregator.model.CustomerDto;
 import com.rx.aggregator.model.TransactionDto;
-import io.reactivex.Observable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,6 +52,7 @@ public class AggregatorController {
                                     });
                         }
                 ).blockingGet();*/
+        //Attempt2 -- Working Code
         return this.customerClient
                 .getCustomer(Integer.parseInt(customerId))
                 .flatMap(customer -> {
@@ -75,6 +75,7 @@ public class AggregatorController {
                         }
 
                 ).blockingGet();
+
 
     }
 

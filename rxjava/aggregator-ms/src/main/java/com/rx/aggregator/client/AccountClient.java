@@ -3,24 +3,40 @@ package com.rx.aggregator.client;
 import com.rx.aggregator.model.AccountDto;
 import com.rx.aggregator.model.TransactionDto;
 import io.reactivex.Observable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestTemplate;
 
-import java.util.Random;
-import java.util.UUID;
+import java.util.List;
 
 
 @Component
 public class AccountClient {
+
+    @Autowired(required = true)
+    private RestTemplate restTemplate;
+
+    @Bean
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
+    }
+
     public Observable<AccountDto> getAccounts(int customerId) {
-        return Observable.range(0, customerId).
-                map(integer -> new AccountDto(integer, UUID.randomUUID().toString(),
-                        new Random().nextDouble()));
+        List<AccountDto> accountDtos = restTemplate.exchange("http://localhost:8090/api/account/" + customerId, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<AccountDto>>() {
+                }).getBody();
+        Observable<AccountDto> observableAccounts = Observable.fromIterable(accountDtos);
+        return observableAccounts;
     }
 
     public Observable<TransactionDto> getTransactions(int customerId, int accountId) {
-        return Observable.range(0, 50).map(integer ->
-                new TransactionDto(
-                        String.format("Customer=%d, Transaction=%d",
-                                customerId, accountId, integer), new Random().nextDouble()));
+        List<TransactionDto> transactionDtos = restTemplate.exchange("http://localhost:8090/api/account/" + customerId + "/" + accountId, HttpMethod.GET, null,
+                new ParameterizedTypeReference<List<TransactionDto>>() {
+                }).getBody();
+        Observable<TransactionDto> observableTransactions = Observable.fromIterable(transactionDtos);
+        return observableTransactions;
     }
 }

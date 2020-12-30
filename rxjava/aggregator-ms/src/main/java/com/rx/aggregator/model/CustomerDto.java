@@ -2,13 +2,14 @@ package com.rx.aggregator.model;
 
 import java.util.List;
 
+
 public class CustomerDto {
     private int id;
     private String firstName;
     private String lastName;
     private List<AccountDto> accounts;
 
-    public CustomerDto(){
+    public CustomerDto() {
 
     }
 

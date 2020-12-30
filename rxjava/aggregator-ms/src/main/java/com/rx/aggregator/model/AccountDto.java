@@ -3,7 +3,7 @@ package com.rx.aggregator.model;
 import java.util.Arrays;
 import java.util.List;
 
-public class AccountDto {
+public class AccountDto{
 
     private int id;
     private String accountNumber;
