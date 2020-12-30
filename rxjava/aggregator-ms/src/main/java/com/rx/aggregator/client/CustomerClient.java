@@ -13,8 +13,10 @@ public class CustomerClient {
     @Autowired(required = true)
     private RestTemplate restTemplate;
 
+    private final String CUSTOMER_BASE_URL = "http://localhost:8091/api/customers/";
+
     public Single<CustomerDto> getCustomer(int customerId) {
-        CustomerDto customerDtos = restTemplate.exchange("http://localhost:8091/api/customers/" + customerId, HttpMethod.GET, null,
+        CustomerDto customerDtos = restTemplate.exchange(CUSTOMER_BASE_URL + customerId, HttpMethod.GET, null,
                 CustomerDto.class).getBody();
         Single<CustomerDto> singleDtos = Single.just(customerDtos);
         return singleDtos;
